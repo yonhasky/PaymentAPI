@@ -165,7 +165,6 @@ class ControllerPartialCancelTest {
 		Map<String, String> resultData = (Map<String, String>) map.get("resultData");
 		String tid = resultData.get("tid");
 
-		Assertions.assertThat(map.get("resultCd")).isEqualTo(ResultCode.success.getCode());
 		return tid;
 
 	}
