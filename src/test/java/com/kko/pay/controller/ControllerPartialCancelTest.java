@@ -80,7 +80,72 @@ class ControllerPartialCancelTest {
 		testPayCancel(cPay, ResultCode.over_cancel_amount);
 
 	}
- 
+
+	@Test
+	public void testPartialCancel2() throws Exception {
+
+		// TEST2 부분취소
+		Payment payment = new Payment();
+		payment.setCardNo("2020303040405050");
+		payment.setAmount(20000);
+		payment.setExpDate("0620");
+		payment.setCvc("123");
+		payment.setInstmt("11");
+		payment.setVat(909);
+		String tid = testPayment(payment);
+		Thread.sleep(1000);
+
+		Payment cPay = new Payment();
+		cPay = new Payment();
+		cPay.setTid(tid);
+		cPay.setAmount(10000);
+		cPay.setVat(0);
+		testPayCancel(cPay, ResultCode.success);
+		Thread.sleep(1000);
+
+		cPay.setAmount(10000);
+		testPayCancel(cPay, ResultCode.remain_vat);
+		Thread.sleep(1000);
+
+		cPay.setAmount(10000);
+		cPay.setVat(909);
+		testPayCancel(cPay, ResultCode.success);
+		Thread.sleep(1000);
+	}
+
+	@Test
+	public void testPartialCancel3() throws Exception {
+
+		// TEST3 부분취소
+		Payment payment = new Payment();
+
+		payment.setCardNo("4040505060607070");
+		payment.setAmount(20000);
+		payment.setExpDate("0620");
+		payment.setCvc("123");
+		payment.setInstmt("11");
+		payment.setVat(null);
+		String tid = testPayment(payment);
+		Thread.sleep(1000);
+
+		Payment cPay = new Payment();
+		cPay.setTid(tid);
+		cPay.setAmount(10000);
+		cPay.setVat(1000);
+		testPayCancel(cPay, ResultCode.success);
+		Thread.sleep(1000);
+
+		cPay.setAmount(10000);
+		cPay.setVat(909);
+		testPayCancel(cPay, ResultCode.over_cancel_vat);
+		Thread.sleep(1000);
+
+		cPay.setAmount(10000);
+		cPay.setVat(null);
+		testPayCancel(cPay, ResultCode.success);
+
+	}
+
 	/**
 	 * 결제 테스트
 	 * 
