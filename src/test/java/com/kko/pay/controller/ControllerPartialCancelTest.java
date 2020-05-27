@@ -34,7 +34,6 @@ class ControllerPartialCancelTest {
 	@Autowired
 	private ObjectMapper obmapper;
 
-	String tid;
 
 	@Test
 	public void testPartialCancel1() throws Exception {
@@ -47,7 +46,7 @@ class ControllerPartialCancelTest {
 		payment.setCvc("123");
 		payment.setInstmt("11");
 		payment.setVat(1000);
-		testPayment(payment);
+		String tid = testPayment(payment);
 		Thread.sleep(1000);
 
 		Payment cPay = new Payment();
@@ -93,7 +92,7 @@ class ControllerPartialCancelTest {
 		payment.setCvc("123");
 		payment.setInstmt("11");
 		payment.setVat(909);
-		testPayment(payment);
+		String tid = testPayment(payment);
 		Thread.sleep(1000);
 
 		Payment cPay = new Payment();
@@ -126,7 +125,7 @@ class ControllerPartialCancelTest {
 		payment.setCvc("123");
 		payment.setInstmt("11");
 		payment.setVat(null);
-		testPayment(payment);
+		String tid = testPayment(payment);
 		Thread.sleep(1000);
 
 		Payment cPay = new Payment();
@@ -153,7 +152,7 @@ class ControllerPartialCancelTest {
 	 * @param payment
 	 * @throws Exception
 	 */
-	public void testPayment(Payment payment) throws Exception {
+	public String testPayment(Payment payment) throws Exception {
 		MvcResult result = mockMvc
 				.perform(MockMvcRequestBuilders.post("/payment").content(obmapper.writeValueAsString(payment))
 						.contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8"))
@@ -166,9 +165,10 @@ class ControllerPartialCancelTest {
 		Map<String, Object> map = obmapper.readValue(content, Map.class);
 		@SuppressWarnings("unchecked")
 		Map<String, String> resultData = (Map<String, String>) map.get("resultData");
-		this.tid = resultData.get("tid");
+		String tid = resultData.get("tid");
 
 		Assertions.assertThat(map.get("resultCd")).isEqualTo(ResultCode.success.getCode());
+		return tid;
 
 	}
 
