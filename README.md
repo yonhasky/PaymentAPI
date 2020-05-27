@@ -139,7 +139,7 @@ Response :
 
 1. 빌드
 gradle build
- 
+test 실패 시 재 빌드> 성공
 2. 실행
 java -jar PaymentAPI-0.0.1-SNAPSHOT.jar
 
