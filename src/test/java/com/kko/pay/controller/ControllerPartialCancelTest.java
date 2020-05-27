@@ -40,7 +40,7 @@ class ControllerPartialCancelTest {
 		// TEST1 부분취소
 
 		Payment payment = new Payment();
-		payment.setCardNo("1010202030304040");
+		payment.setCardNo("9090808070706060");
 		payment.setAmount(11000);
 		payment.setExpDate("0620");
 		payment.setCvc("123");
@@ -86,7 +86,7 @@ class ControllerPartialCancelTest {
 
 		// TEST2 부분취소
 		Payment payment = new Payment();
-		payment.setCardNo("2020303040405050");
+		payment.setCardNo("1010505020203030");
 		payment.setAmount(20000);
 		payment.setExpDate("0620");
 		payment.setCvc("123");
@@ -119,7 +119,7 @@ class ControllerPartialCancelTest {
 		// TEST3 부분취소
 		Payment payment = new Payment();
 
-		payment.setCardNo("4040505060607070");
+		payment.setCardNo("9876987698769876");
 		payment.setAmount(20000);
 		payment.setExpDate("0620");
 		payment.setCvc("123");
