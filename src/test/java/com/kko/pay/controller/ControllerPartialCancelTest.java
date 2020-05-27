@@ -34,7 +34,6 @@ class ControllerPartialCancelTest {
 	@Autowired
 	private ObjectMapper obmapper;
 
-
 	@Test
 	public void testPartialCancel1() throws Exception {
 		// TEST1 부분취소
@@ -156,8 +155,7 @@ class ControllerPartialCancelTest {
 		MvcResult result = mockMvc
 				.perform(MockMvcRequestBuilders.post("/payment").content(obmapper.writeValueAsString(payment))
 						.contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8"))
-				.andDo(print()).andExpect(status().isOk())
-				.andExpect(jsonPath("$.resultCd").value(ResultCode.success.getCode())).andReturn();
+				.andDo(print()).andExpect(status().isOk()).andReturn();
 
 		String content = result.getResponse().getContentAsString();
 
@@ -167,6 +165,7 @@ class ControllerPartialCancelTest {
 		Map<String, String> resultData = (Map<String, String>) map.get("resultData");
 		String tid = resultData.get("tid");
 
+		Assertions.assertThat(map.get("resultCd")).isEqualTo(ResultCode.success.getCode());
 		return tid;
 
 	}
